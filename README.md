@@ -228,24 +228,6 @@ Asagidaki akıs repoda aktif olarak kullanilabilir:
 3. `python kod/konut_2026_2027_forecast.py`
    - `result/csv/konut_2026_2027_*.csv`
 
-Bu yapiyla repo sadece kaynak kod degil, ayni zamanda test, tahmin ve gorsel raporlama klasoru olarak da kullanilabilir.
 
-## Guvenlik Notlari
-
-- Gercek veritabani kullanici adi, sifre, host ve kurum ici baglanti bilgileri repoda tutulmaz.
-- Bu proje `.env` uzerinden baglanti kuracak sekilde hazirlanmistir.
-- `result/csv/` altindaki dosyalar teknik olarak secret olmayabilir; ancak kurumsal analiz ciktilari olabilecegi icin repoya dahil edilmemesi tavsiye edilir.
-- Paylasilan repoda tablo ve kolon isimleri generic tutulmustur.
-
-## Raporlama Onerisi
-
-rapor icin asagidaki 3 cikti birlikte kullanilabilir:
-
-1. `konut_test_metrik_*.csv`
-   - modelin test performansini gosterir
-2. `konut_test_tahminler_*.csv`
-   - gercek ve tahmin degerlerinin tarih bazli karsilastirmasini sunar
-3. `result/grafik/` altina kaydedilen grafikler
-   - gorsel anlatimi guclendirir
 
 
