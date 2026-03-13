@@ -61,17 +61,15 @@ flowchart TD
 
 
 
-![result/grafik_sonuc/Figure_3.png)
-![result/grafik/konut_2026_2027_trend_TP_KFE_TR10.png)
-![result/grafik_sonuc/Figure_5.png)
-![result/grafik_sonuc/Figure_7.png)
+![(result/grafik_sonuc/Figure_3.png)
+![(result/grafik_sonuc/Figure_6.png)
+![(result/grafik_sonuc/Figure_5.png)
+![(result/grafik_sonuc/Figure_7.png)
 
 
 Not:
 
 - `plot_konut_2025_vs_pred.py` 2025 grafigini otomatik kaydeder.
-- PNG dosyasini repoya dahil ettiginde GitHub bu gorseli otomatik gosterir.
-- Kurumsal olarak paylasilmasi uygun olmayan gorseller repoya eklenmemelidir.
 
 ## Proje Yapisi
 
@@ -147,22 +145,8 @@ Ornek dosyalar:
 
 Bu klasor, grafik ciktilarini saklamak icin kullanilir.
 
-Buraya asagidaki turde dosyalar koyulabilir:
 
-- 2025 gercek vs tahmin grafik ekran goruntuleri
-- 2026-2027 tahmin trend grafikleri
-- sunum veya rapora eklenecek png/jpg dosyalari
 
-Onerilen dosya isimleri:
-
-- `konut_2025_gercek_vs_tahmin_TR10.png`
-- `konut_2026_2027_trend_TR10.png`
-- `model_karsilastirma_2025.png`
-
-Not:
-
-- `plot_konut_2025_vs_pred.py` artik olusturdugu grafigi otomatik olarak bu klasore kaydeder.
-- Boylece ekran goruntusu alma zorunlulugu olmaz.
 
 ## Kurulum
 
