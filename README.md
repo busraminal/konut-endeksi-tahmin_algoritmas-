@@ -57,20 +57,15 @@ flowchart TD
     Z --> K[Konut Endeksi Tahmini]
 ```
 
-## GitHub'da Gorsel Gosterimi
-
-
-Onerilen gorsel dosya isimleri:
-
-- `result/grafik_sonuc/Figure_3.png`
-- `result/grafik/konut_2026_2027_trend_TP_KFE_TR10.png`
+## Model çıktıları
 
 
 
-```md
+![result/grafik_sonuc/Figure_3.png)
+![result/grafik/konut_2026_2027_trend_TP_KFE_TR10.png)
 ![result/grafik_sonuc/Figure_5.png)
 ![result/grafik_sonuc/Figure_7.png)
-```
+
 
 Not:
 
