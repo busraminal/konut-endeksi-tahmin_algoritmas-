@@ -59,18 +59,17 @@ flowchart TD
 
 ## GitHub'da Gorsel Gosterimi
 
-Gercek grafik PNG dosyalari repoya eklendiginde README icinde dogrudan gosterilebilir.
 
 Onerilen gorsel dosya isimleri:
 
-- `result/grafik/konut_2025_gercek_vs_tahmin_TP_KFE_TR10_M7_maliyet_enflasyon.png`
+- `result/grafik_sonuc/Figure_3.png`
 - `result/grafik/konut_2026_2027_trend_TP_KFE_TR10.png`
 
-Paylasilmasinda sakinca olmayan PNG dosyalari varsa README'ye asagidaki formatla eklenebilir:
+
 
 ```md
-![2025 Gercek vs Tahmin](result/grafik/konut_2025_gercek_vs_tahmin_TP_KFE_TR10_M7_maliyet_enflasyon.png)
-![2026-2027 Trend](result/grafik/konut_2026_2027_trend_TP_KFE_TR10.png)
+![result/grafik_sonuc/Figure_5.png)
+![result/grafik_sonuc/Figure_7.png)
 ```
 
 Not:
