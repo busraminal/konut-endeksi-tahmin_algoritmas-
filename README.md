@@ -239,7 +239,7 @@ Bu yapiyla repo sadece kaynak kod degil, ayni zamanda test, tahmin ve gorsel rap
 
 ## Raporlama Onerisi
 
-Yonetim sunumu veya ic rapor icin asagidaki 3 cikti birlikte kullanilabilir:
+rapor icin asagidaki 3 cikti birlikte kullanilabilir:
 
 1. `konut_test_metrik_*.csv`
    - modelin test performansini gosterir
@@ -248,14 +248,4 @@ Yonetim sunumu veya ic rapor icin asagidaki 3 cikti birlikte kullanilabilir:
 3. `result/grafik/` altina kaydedilen grafikler
    - gorsel anlatimi guclendirir
 
-Bu yapi sayesinde hem teknik ekip hem de yonetim tarafi ayni proje klasoru icinden veriye, metriğe ve gorsellere ulasabilir.
 
-## GitHub Oncesi Kisa Kontrol
-
-Repoyu paylasmadan once su 5 noktayi kontrol et:
-
-1. `.env` dosyasi repoya dahil edilmesin.
-2. `result/csv/` altinda kurumsal olarak paylasilmasi istenmeyen cikti kalmasin.
-3. `result/grafik/` altindaki gorsellerin gizli bilgi icermediginden emin ol.
-4. `kod/config.py` icindeki generic tablo adlari korunuyor mu kontrol et.
-5. README icindeki komutlarin senin ortaminda calistigini dogrula.
