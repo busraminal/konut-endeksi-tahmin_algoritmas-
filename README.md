@@ -21,6 +21,64 @@ Projeyi ilk kez kullanacak biri icin en kisa akıs:
 
 Bu 6 adim sonunda elinde hem test metrikleri hem tahmin CSV'leri hem de sunumda kullanabilecegin grafik dosyalari olur.
 
+## Gorsel Ozet
+
+GitHub uzerinde README icinde dogrudan gorunen bir akis ozeti:
+
+```mermaid
+flowchart LR
+    A[Veritabani] --> B[test_raporu_uret.py]
+    A --> C[2026_tahmin.py API]
+    B --> D[result/csv metrik]
+    B --> E[result/csv tahmin]
+    E --> F[plot_konut_2025_vs_pred.py]
+    F --> G[result/grafik png]
+    A --> H[konut_2026_2027_forecast.py]
+    H --> I[result/csv ileri tahmin]
+```
+
+Model akisinin teknik ozeti:
+
+```mermaid
+flowchart TD
+    A[Konut Endeksi] --> Z[Ana Prophet Modeli]
+    B[USD] --> Y[Regresor Prophet]
+    C[EUR] --> X[Regresor Prophet]
+    D[Altin] --> W[Regresor Prophet]
+    E[Enflasyon] --> V[Regresor Prophet]
+    F[Insaat Maliyeti] --> U[Regresor Prophet]
+    G[Borsa] --> T[Regresor Prophet]
+    Y --> Z
+    X --> Z
+    W --> Z
+    V --> Z
+    U --> Z
+    T --> Z
+    Z --> K[Konut Endeksi Tahmini]
+```
+
+## GitHub'da Gorsel Gosterimi
+
+Gercek grafik PNG dosyalari repoya eklendiginde README icinde dogrudan gosterilebilir.
+
+Onerilen gorsel dosya isimleri:
+
+- `result/grafik/konut_2025_gercek_vs_tahmin_TP_KFE_TR10_M7_maliyet_enflasyon.png`
+- `result/grafik/konut_2026_2027_trend_TP_KFE_TR10.png`
+
+Paylasilmasinda sakinca olmayan PNG dosyalari varsa README'ye asagidaki formatla eklenebilir:
+
+```md
+![2025 Gercek vs Tahmin](result/grafik/konut_2025_gercek_vs_tahmin_TP_KFE_TR10_M7_maliyet_enflasyon.png)
+![2026-2027 Trend](result/grafik/konut_2026_2027_trend_TP_KFE_TR10.png)
+```
+
+Not:
+
+- `plot_konut_2025_vs_pred.py` 2025 grafigini otomatik kaydeder.
+- PNG dosyasini repoya dahil ettiginde GitHub bu gorseli otomatik gosterir.
+- Kurumsal olarak paylasilmasi uygun olmayan gorseller repoya eklenmemelidir.
+
 ## Proje Yapisi
 
 ```text
@@ -128,6 +186,71 @@ DB_USER=postgres
 DB_PASSWORD=your_password_here
 ```
 
+## Teknik Yapi
+
+Projede kullanilan temel bilesenler:
+
+- `Python`: uygulama ve modelleme dili
+- `pandas`: veri okuma, birlestirme ve tarih donusumleri
+- `Prophet`: zaman serisi tahmin modeli
+- `FastAPI`: tahmin servisini API olarak sunmak icin
+- `Pydantic`: API istek dogrulamasi icin
+- `SQLAlchemy` ve `pg8000`: PostgreSQL baglantisi icin
+- `matplotlib`: gercek vs tahmin grafiklerini uretmek icin
+
+## Neden Bu Model Yapisi Kullanildi
+
+- Hedef seri aylik oldugu icin ana tahminleme mantigi zaman serisi tabanli kuruldu.
+- Konut endeksi tek basina degil, makro degiskenlerle birlikte ogrenilsin diye regressorlu Prophet tercih edildi.
+- API tarafinda gelecekteki regressorlari sabit tutmak yerine her biri icin ayri model kuruldu.
+- Bu yaklasim, tek asamali sabit-varsayim mantigina gore daha gercekci bir ileri tahmin akisi saglar.
+
+Kullanilan regresorler:
+
+- `usd`
+- `eur`
+- `altin`
+- `enflasyon`
+- `insaat_maliyet`
+- `borsa`
+
+## Kullanilan Parametreler ve Gerekceleri
+
+Ana Prophet ayarlari:
+
+- `changepoint_prior_scale=0.2`
+  - Trendin tamamen sabit kalmamasini saglar.
+  - Cok dusuk tutulursa model fazla katilasir, cok yuksek tutulursa asiri oynak olur.
+  - `0.2` burada orta seviyede esneklik icin secildi.
+- `yearly_seasonality=True`
+  - Veri aylik oldugu icin yil icindeki mevsimsel tekrarlarin modele girmesi istendi.
+- `weekly_seasonality=False`
+  - Haftalik desen aranmaz; cunku hedef veri haftalik degil.
+- `daily_seasonality=False`
+  - Gunluk desen aranmaz; cunku model aylik endeks tahmini uretir.
+
+Veri hazirlama tarafinda kullanilan kararlar:
+
+- `pd.merge_asof(..., direction="backward")`
+  - Farkli kaynaklardan gelen serileri en yakin onceki tarih ile eslemek icin kullanildi.
+  - Bu sayede birebir ayni tarih zorunlulugu olmadan veri birlestirme yapildi.
+- `ffill()`, `bfill()`, `fillna(0)`
+  - Prophet regresor kolonlarinda bosluk istemedigi icin eksik degerler kontrollu bicimde dolduruldu.
+- `pd.to_datetime(...)`
+  - Tum tablolarin ortak zaman ekseninde calisabilmesi icin tarih kolonlari standartlastirildi.
+
+Test ve raporlama tarafinda kullanilan kararlar:
+
+- `test_yil=2025`
+  - Gecmis yillar egitim, 2025 ise tamamen gorulmeyen test yili olarak kullanildi.
+  - Bu, yonetime daha savunulabilir bir backtest senaryosu sunar.
+- `MAE`
+  - Ortalama mutlak hatayi gosterir.
+- `MAPE`
+  - Hatanin yuzdesel olarak ne kadar oldugunu gosterir.
+- `RMSE`
+  - Buyuk hatalari daha fazla cezalandirir.
+
 ## Calistirma Komutlari
 
 ### API servisini baslatmak
@@ -228,6 +351,23 @@ Asagidaki akıs repoda aktif olarak kullanilabilir:
 3. `python kod/konut_2026_2027_forecast.py`
    - `result/csv/konut_2026_2027_*.csv`
 
+Bu yapiyla repo sadece kaynak kod degil, ayni zamanda test, tahmin ve gorsel raporlama klasoru olarak da kullanilabilir.
 
+## Guvenlik Notlari
 
+- Gercek veritabani kullanici adi, sifre, host ve kurum ici baglanti bilgileri repoda tutulmaz.
+- Bu proje `.env` uzerinden baglanti kuracak sekilde hazirlanmistir.
+- `result/csv/` altindaki dosyalar teknik olarak secret olmayabilir; ancak kurumsal analiz ciktilari olabilecegi icin repoya dahil edilmemesi tavsiye edilir.
+- Paylasilan repoda tablo ve kolon isimleri generic tutulmustur.
+
+## Raporlama Onerisi
+
+rapor icin asagidaki 3 cikti birlikte kullanilabilir:
+
+1. `konut_test_metrik_*.csv`
+   - modelin test performansini gosterir
+2. `konut_test_tahminler_*.csv`
+   - gercek ve tahmin degerlerinin tarih bazli karsilastirmasini sunar
+3. `result/grafik/` altina kaydedilen grafikler
+   - gorsel anlatimi guclendirir
 
