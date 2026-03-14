@@ -60,12 +60,10 @@ flowchart TD
 ## Model çıktıları
 
 ![Figure 3](result/grafik_sonuc/Figure_3.png)
-
 ![Figure 6](result/grafik_sonuc/Figure_6.png)
-
 ![Figure 5](result/grafik_sonuc/Figure_5.png)
-
 ![Figure 7](result/grafik_sonuc/Figure_7.png)
+![Figure 7](result/grafik_sonuc/Figure_4.png)
 
 
 Not:
